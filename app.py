@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello():
     resp = {}
-    resp['message'] = 'Hello, World!'
+    resp['It'] = 'Works!'
     return resp
 
 @app.route('/html/')
@@ -21,6 +21,11 @@ def hello_world(user=None):
         <p>Welcome to the world of Flask!</p>
     </body>
 </html>''' % user
+
+@app.route('/template/')
+def template():
+    user = request.args.get('user', 'Ahmad')
+    return render_template('index.html', user=user)
 
 if __name__ == '__main__':
     app.debug = True
