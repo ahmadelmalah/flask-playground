@@ -1,6 +1,27 @@
 from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy import text
+
 
 app = Flask(__name__)
+# engine = create_engine("postgresql://postgres:55555555@127.0.0.1/km-test", echo=True)
+# con = engine.connect()
+# res = con.execute(text("SELECT * FROM cards"))
+# for row in res:
+#     print(row)
+#     print(type(row))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:55555555@127.0.0.1/km-test'
+db = SQLAlchemy(app)
+with app.app_context():
+    res = db.session.execute(text("SELECT * FROM cards"))
+    for row in res:
+        print(row)
+        print(type(row))
+
+
+
 
 @app.route('/')
 def hello():
